@@ -1630,27 +1630,13 @@ int main( int argc, char *argv[] )
     }
   }
 
-  if ( !pythonArgs.isEmpty() )
-  {
-    if ( !pythonfile.isEmpty() )
-    {
-#ifdef Q_OS_WIN
-      //replace backslashes with forward slashes
-      pythonfile.replace( '\\', '/' );
-#endif
-      pythonArgs.prepend( pythonfile );
-    }
-
-    QgsPythonRunner::run( QStringLiteral( "sys.argv = ['%1']" ).arg( pythonArgs.replaceInStrings( QChar( '\'' ), QStringLiteral( "\\'" ) ).join( "','" ) ) );
-  }
-
   if ( !pythonfile.isEmpty() )
   {
-#ifdef Q_OS_WIN
-    //replace backslashes with forward slashes
-    pythonfile.replace( '\\', '/' );
-#endif
-    QgsPythonRunner::run( QStringLiteral( "with open('%1','r') as f: exec(f.read())" ).arg( pythonfile ) );
+    if ( !pythonArgs.isEmpty() )
+    {
+      pythonArgs.prepend( pythonfile );
+    }
+    QgsPythonRunner::runFile( pythonfile, pythonArgs );
   }
 
   /////////////////////////////////`////////////////////////////////////

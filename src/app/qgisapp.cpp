@@ -12101,6 +12101,21 @@ class QgsPythonRunnerImpl : public QgsPythonRunner
       return false;
     }
 
+    bool runFile( const QString &filename, const QStringList &arguments, const QString &messageOnError = QString() ) override
+    {
+#ifdef WITH_BINDINGS
+      if ( mPythonUtils && mPythonUtils->isEnabled() )
+      {
+        return mPythonUtils->runFile( filename, arguments, messageOnError );
+      }
+#else
+      Q_UNUSED( filename )
+      Q_UNUSED( arguments )
+      Q_UNUSED( messageOnError )
+#endif
+      return false;
+    }
+
     bool evalCommand( QString command, QString &result ) override
     {
 #ifdef WITH_BINDINGS

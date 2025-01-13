@@ -39,6 +39,20 @@ bool QgsPythonRunner::run( const QString &command, const QString &messageOnError
   }
 }
 
+bool QgsPythonRunner::runFile( const QString &filename, const QStringList &arguments, const QString &messageOnError )
+{
+  if ( sInstance )
+  {
+    QgsDebugMsgLevel( "Running " + filename, 3 );
+    return sInstance->runFile( filename, arguments, messageOnError );
+  }
+  else
+  {
+    QgsDebugError( QStringLiteral( "Unable to run Python command: runner not available!" ) );
+    return false;
+  }
+}
+
 bool QgsPythonRunner::eval( const QString &command, QString &result )
 {
   if ( sInstance )

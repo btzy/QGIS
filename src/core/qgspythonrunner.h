@@ -42,6 +42,9 @@ class CORE_EXPORT QgsPythonRunner
     //! Execute a Python statement
     static bool run( const QString &command, const QString &messageOnError = QString() );
 
+    //! Execute a Python file, with the given arguments
+    static bool runFile( const QString &filename, const QStringList &arguments, const QString &messageOnError = QString() );
+
     //! Eval a Python statement
     static bool eval( const QString &command, QString &result SIP_OUT );
 
@@ -58,6 +61,8 @@ class CORE_EXPORT QgsPythonRunner
     virtual ~QgsPythonRunner() = default;
 
     virtual bool runCommand( QString command, QString messageOnError = QString() ) = 0;
+
+    virtual bool runFile( const QString &filename, const QStringList &arguments, const QString &messageOnError = QString() ) = 0;
 
     virtual bool evalCommand( QString command, QString &result ) = 0;
 
